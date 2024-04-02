@@ -5,16 +5,12 @@ from pathlib import Path
 
 # Image Input/Output
 # ----------------------------------------------------------------------------------------------
-# channel_type = ["vv","vh","nasadem"]
 channel_type = "rgb"
 in_channels = 3 if channel_type == "rgb" else len(channel_type)
 num_classes = 3
 height = 400 # for PHR-CB experiment patch size = height = width
 width = 400
-# # only height and width
-# initial_height = 5000 # before patch
-# initial_width = 5000 # before patch
-rename = False
+rename = False # True if we nned to name the files name to be compatible with our pipeline's file format otherwise False
 
 # Training
 # ----------------------------------------------------------------------------------------------
@@ -29,8 +25,8 @@ gpu = "0"
 
 # Dataset
 # --------------------------------mask--------------------------------------------------------------
-weights = True # False if cfr, True if cfr_cb
-balance_weights = [2.2,7.8, 0]
+weights = True # False if cfr or phr, True if cfr_cb or phr_cb
+balance_weights = [2.2,7.8, 0] #weight for handling data imbalance issues
 root_dir = Path("/mnt/hdd2/mdsamiul/project/imseg_rgb_csml")
 dataset_dir = root_dir / "data/dataset"
 train_size = 0.8
