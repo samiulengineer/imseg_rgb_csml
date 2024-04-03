@@ -51,7 +51,7 @@ Our current pipeline supports semantic segmentation for both binary and multi-cl
 First clone the github repo in your local or server machine by following:
 
 ```
-git clone https://github.com/samiulengineer/road_segmentation.git
+git clone https://github.com/samiulengineer/imseg_rgb_csml.git
 ```
 
 Change the working directory to project root directory. Use Conda/Pip to create a new environment and install dependency from `requirement.txt` file. The following command will install the packages according to the configuration file `requirement.txt`.
