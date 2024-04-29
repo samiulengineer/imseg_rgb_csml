@@ -5,16 +5,11 @@ from pathlib import Path
 
 # Image Input/Output
 # ----------------------------------------------------------------------------------------------
-# channel_type = ["vv","vh","nasadem"]
-channel_type = "rgb"
-in_channels = 3 if channel_type == "rgb" else len(channel_type)
+in_channels = 3 
 num_classes = 3
 height = 400 # for PHR-CB experiment patch size = height = width
 width = 400
-# # only height and width
-# initial_height = 5000 # before patch
-# initial_width = 5000 # before patch
-rename = False
+
 
 # Training
 # ----------------------------------------------------------------------------------------------
@@ -29,7 +24,7 @@ gpu = "0"
 
 # Dataset
 # --------------------------------mask--------------------------------------------------------------
-weights = True # False if cfr, True if cfr_cb
+weights = True # False if cfr or [hr], True if cfr_cb or phr_cb
 balance_weights = [2.2,7.8, 0]
 root_dir = Path("/mnt/hdd2/mdsamiul/project/imseg_rgb_csml")
 dataset_dir = root_dir / "data/dataset"
@@ -43,7 +38,7 @@ eval_dir = root_dir / "data/csv/eval.csv"
 # ----------------------------------------------------------------------------------------------
 patchify = True
 patch_class_balance = True # whether to use class balance while doing patchify
-patch_size = 128 # height = width, anyone is suitable
+patch_size = 128 
 stride = 64
 p_train_dir = root_dir / f"data/json/train_patch_phr_cb_{patch_size}_{stride}.json"
 p_valid_dir = root_dir / f"data/json/valid_patch_phr_cb_{patch_size}_{stride}.json"
@@ -69,12 +64,10 @@ video_path = None    # If None, then by default root_dir/data/video_frame
 
 # Prediction Plot
 # ----------------------------------------------------------------------------------------------
-# plot_single = False # if True, then only index x_test image will plot # default plot_single  value will not work
 index = -1 # by default -1 means random image else specific index image provide by user
 
 #  Create config path
 # ----------------------------------------------------------------------------------------------
-# do not need this condition
 if patchify:
     height = patch_size
     width = patch_size

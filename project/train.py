@@ -59,8 +59,7 @@ print("Class Weigth = {}".format(str(weights)))
 print("Experiment = {}".format(str(experiment)))
 print("--------------------------------------------------------\n")
 
-if rename:
-    rename_files(dataset_dir)
+
 
 # Dataset
 # ----------------------------------------------------------------------------------------------

@@ -16,16 +16,6 @@ from tensorflow.keras.utils import to_categorical, Sequence
 # from utils import video_to_frame
 matplotlib.use("Agg")
 
-#only for SAR
-label_norm =   {'vv':["_vv.tif", -12.204613877277495, 4.0422273221629785],
-                'vh':["_vh.tif",-18.96970667660666, 4.367189151420688],
-                'nasadem':["_nasadem.tif",812.64422736, 425.41858324129265],
-                'jrc-gsw-change':["_jrc-gsw-change.tif", 238.76, 5.15],
-                'jrc-gsw-extent':["_jrc-gsw-extent.tif", 2.15, 22.71],
-                'jrc-gsw-occurrence':["_jrc-gsw-occurrence.tif", 6.50, 29.06],
-                'jrc-gsw-recurrence':["_jrc-gsw-recurrence.tif", 10.04, 33.21],
-                'jrc-gsw-seasonality':["_jrc-gsw-seasonality.tif", 2.60, 22.79],
-                'jrc-gsw-transitions':["_jrc-gsw-transitions.tif", 0.55, 1.94]}
 
 def transform_data(label, num_classes):
     """
@@ -80,54 +70,6 @@ def read_img(directory, in_channels=None, label=False, patch_idx=None, height=25
         else:
             return X
 
-# #this read_img for SAR data
-# def read_img(directory, in_channels=config.in_channels, label=False, patch_idx=None, height=None, width=None):
-#     """
-#     Summary:
-#         read image with rasterio and normalize the feature
-#     Arguments:
-#         directory (str): image path to read
-#         in_channels (bool): number of channels to read
-#         label (bool): TRUE if the given directory is mask directory otherwise False
-#         patch_idx (list): patch indices to read
-#     Return:
-#         numpy.array
-#     """
-    
-#     # for mask images
-#     if label:
-#         with rasterio.open(directory) as fmask: # opening the directory
-#             mask = fmask.read(1)    # read the image (Data from a raster band can be accessed by the band’s index number. Following the GDAL convention, bands are indexed from 1. [int or list, optional] – If indexes is a list, the result is a 3D array, but is a 2D array if it is a band index number.)
-#             mask[mask == 2.0] = 0   # convert unlabeled to non-water
-#             mask[mask == 1.0] = 1  # convert unlabeled to non-water
-        
-#             if patch_idx:   # if patch is true then returning the extracted patch from mask else returning the whole mask
-#                 return mask[patch_idx[0]:patch_idx[1], patch_idx[2]:patch_idx[3]] # extract patch from original mask
-#             else:
-#                 return mask
-#     # for features images
-#     else:
-#         if channel_type == 'rgb':
-#             X = cv2.imread(directory)
-#         else:
-#             with rasterio.open((directory+label_norm['vv'][0])) as f:   # opening the image from the directory with channel name
-#                 height, width = f.shape
-#             X = np.zeros((height,width, in_channels)) # get a numpy array of image size
-#             #to run a single input channel change the value of i according to label_norm dictornay
-#             for i in channel_type:    # read N number of channels
-#                 tmp_ext = label_norm[i][0]  # get the name of channel (label_norm is dictonary containing {channel name, norm_val_1, norm_val_2})
-#                 with rasterio.open((directory+tmp_ext)) as f:   # opening the image from the directory with channel name
-#                     fea = f.read(1)
-#                 # to run a single input channel put X[:, :, 0]  Also change the show_prediction and patch_show_prediction in utils.py
-#                 X[:,:,channel_type.index(i)] = (fea - label_norm[i][1]) / label_norm[i][2]  # normalizing the data
-        
-            
-        
-            
-#         if patch_idx:   # if patch is true then returning the extracted patch from image else returning the whole image
-#             return X[patch_idx[0]:patch_idx[1], patch_idx[2]:patch_idx[3],:] # extract patch from original image
-#         else:
-#             return X
 
 
 def data_split(images, masks):
@@ -231,50 +173,11 @@ def data_csv_gen():
     save_csv(valid, "valid.csv")
     save_csv(test, "test.csv")
         
-# def data_csv_gen():
-#     """
-#     Summary:
-#         spliting data into train, test, valid
-#     Arguments:
-#         empty
-#     Return:
-#         save file
-#     """
-#     images = []
-#     masks = []
-#     data_path = dataset_dir
-#     path_list = os.listdir(data_path)
-#     # Iterate through files in the specified directory
-#     for filename in sorted(path_list):
-#         # Check if the file ends with _vv.tif or _vh.tif or _nasadem.tif
-#         if filename.endswith(('_vv.tif', '_vh.tif', '_nasadem.tif')):
-#             # Append the filename to images list after removing the suffix
-#             image_name = filename.replace('_vv.tif', '').replace('_vh.tif', '').replace('_nasadem.tif', '')
-#             if image_name not in images:
-#                 images.append(image_name)
-#         else:
-#             masks.append(filename)
-
-#     new_images = [f"{data_path}/{image_name}" for image_name in images]
-#     new_masks = [f"{data_path}/{image_name}" for image_name in masks]
-
-#     x_train, y_train, x_valid, y_valid, x_test, y_test = data_split(new_images, new_masks)
-
-#     # creating dictionary for train, test and validation
-#     train = {"feature_ids": x_train, "masks": y_train}
-#     valid = {"feature_ids": x_valid, "masks": y_valid}
-#     test = {"feature_ids": x_test, "masks": y_test}
-
-#     # saving dictionary as csv files
-#     save_csv(train, "train.csv")
-#     save_csv(valid, "valid.csv")
-#     save_csv(test, "test.csv")
-
 
 def eval_csv_gen():
     """
     Summary:
-        for evaluation generate frame from video if video path is given and create csv file from testing folder
+        for evaluation generate eval.csv from evaluation dataset
     Arguments:
         empty
     Return:
@@ -284,13 +187,6 @@ def eval_csv_gen():
     data_path = dataset_dir
     images = []
 
-    # video is provided then it will generate frame from video
-    # if video_path != "None":
-    #     video_to_frame()
-    #     image_path = dataset_dir / "video_frame"
-
-    # else:
-    #     image_path = data_path
     image_path = data_path
 
     image_names = os.listdir(image_path / 'input')
@@ -304,37 +200,6 @@ def eval_csv_gen():
 
     # saving dictionary as csv files
     save_csv(eval, "eval.csv")
-
-# def eval_csv_gen():
-#     """
-#     Summary:
-#         for evaluation generate frame from video if video path is given and create csv file from testing folder
-#     Arguments:
-#         empty
-#     Return:
-#         csv file
-#     """
-#     images = []
-#     masks = []
-#     data_path = dataset_dir
-#     path_list = os.listdir(data_path)
-#     # Iterate through files in the specified directory
-#     for filename in sorted(path_list):
-#         # Check if the file ends with _vv.tif or _vh.tif or _nasadem.tif
-#         if filename.endswith(('_vv.tif', '_vh.tif', '_nasadem.tif')):
-#             # Append the filename to images list after removing the suffix
-#             image_name = filename.replace('_vv.tif', '').replace('_vh.tif', '').replace('_nasadem.tif', '')
-#             if image_name not in images:
-#                 images.append(image_name)
-#         else:
-#             masks.append(filename)
-
-#     new_images = [f"{data_path}/{image_name}" for image_name in images]
-#     new_masks = [f"{data_path}/{image_name}" for image_name in masks]
-#     # creating dictionary for train, test and validation
-#     eval = {"feature_ids": new_images, "masks": new_masks}
-#     # saving dictionary as csv files
-#     save_csv(eval, "eval.csv")
 
 
 def class_percentage_check(label):
@@ -372,7 +237,6 @@ def save_patch_idx(path, patch_size=256, stride=8, test=None, patch_class_balanc
     """
     # read the image
     img = cv2.imread(path)
-    print(".........")
     print(path)
     print(type(img))
     print(img.shape)
@@ -382,12 +246,8 @@ def save_patch_idx(path, patch_size=256, stride=8, test=None, patch_class_balanc
     img[img == 255] = 1
     img[img == 170] = 2
     img[img == 85] = 2
-    # img = np.where((img<105) | (img>105), 0, 1)
 
-    # calculating number patch for given image
-    # [{(image height-patch_size)/stride}+1]
     patch_height = int((img.shape[0]-patch_size)/stride) + 1
-    # [{(image weight-patch_size)/stride}+1]
     patch_weight = int((img.shape[1]-patch_size)/stride) + 1
 
     # total patch images = patch_height * patch_weight
@@ -494,7 +354,7 @@ def patch_images(data, name):
     # dictionary for patch images
     temp = {"feature_ids": img_dirs, "masks": masks_dirs, "patch_idx": all_patch}
 
-    # save data
+    # save data to json 
     write_json((root_dir / "data/json/"), (name + str(patch_size)+"_" + str(stride) + ".json"), temp)
 
 
@@ -505,7 +365,7 @@ class Augment:
         super().__init__()
         """
         Summary:
-            initialize class variables
+            Augmentaion class for doing data augmentation on feature images and corresponding masks
         Arguments:
             batch_size (int): how many data to pass in a single step
             ratio (float): percentage of augment data in a single batch
@@ -584,7 +444,7 @@ class MyDataset(Sequence):
     ):
         """
         Summary:
-            initialize class variables
+             MyDataset class for creating dataloader object
         Arguments:
             img_dir (list): all image directory
             tgt_dir (list): all mask/ label directory
@@ -666,7 +526,6 @@ class MyDataset(Sequence):
                         read_img(batch_y[i], label=True, patch_idx=batch_patch[i])
                     )
 
-            # commented out by manik (as patchify is false, it's CFR or CFR_CB, so it's deprecated)
             else:
                 imgs.append(read_img(batch_x[i], in_channels=self.in_channels))
                 # transform mask for model (categorically)
@@ -689,7 +548,6 @@ class MyDataset(Sequence):
                 )  # augment patch images and mask randomly
                 imgs = imgs + aug_imgs  # adding augmented images
 
-            # commented out by manik (as patchify is false it's CFR or CFR_CB, so it's deprecated)
             else:
                 aug_imgs, aug_masks = self.augment.call(
                     self.img_dir, self.tgt_dir
@@ -708,7 +566,6 @@ class MyDataset(Sequence):
         tgts = np.array(tgts)
         imgs = np.array(imgs)
 
-        # commented out by manik (as self.weights != None it's CFR_CB, so it's deprecated)
         # return weighted features and lables
         if self.weights != None:
             # creating a constant tensor
@@ -719,7 +576,7 @@ class MyDataset(Sequence):
             # get the weighted target
             y_weights = tf.gather(
                 class_weights, indices=tf.cast(tgts, tf.int32)
-            )  # ([self.paths[i] for i in indexes])
+            )  
 
             return tf.convert_to_tensor(imgs), y_weights
 
@@ -765,7 +622,6 @@ class MyDataset(Sequence):
                     )
                 )
 
-        # commented out by manik (as patchify is false it's CFR or CFR_CB, so it's deprecated)
         else:
             imgs.append(read_img(self.img_dir[idx], in_channels=self.in_channels))
 
@@ -806,7 +662,6 @@ def get_train_val_dataloader():
         if patch_class_balance:
             patch_images(data, "train_patch_phr_cb_")
 
-        # commented out by manik (as patch_class_balance is false and patchify is True, it's PHR, so it's deprecated)
         else:
             patch_images(data, "train_patch_phr_")
 
@@ -816,7 +671,6 @@ def get_train_val_dataloader():
         if patch_class_balance:
             patch_images(data, "valid_patch_phr_cb_")
 
-        # commented out by manik (as patch_class_balance is false and patchify is True, it's PHR, so it's deprecated)
         else:
             patch_images(data, "valid_patch_phr_")
 
@@ -836,7 +690,6 @@ def get_train_val_dataloader():
         train_idx = train_dir["patch_idx"]
         valid_idx = valid_dir["patch_idx"]
 
-    # commented out by manik (as patchify is false, it's CFR or CFR_CB, so it's deprecated)
     # initializing train, test and validatinn for images
     else:
         print("Loading features and masks directories.....")
@@ -857,7 +710,7 @@ def get_train_val_dataloader():
     print("---------------------------------------------------")
     
 
-    # create Augment object if augment is true
+    # create Augment object if augment is true and batch_size is greater than 1
     if augment and batch_size > 1:
         augment_obj = Augment(batch_size, in_channels)
         # new batch size after augment data for train
@@ -866,10 +719,6 @@ def get_train_val_dataloader():
         n_batch_size = batch_size
         augment_obj = None
 
-    # commented out by manik (as weights is true, it's CFR_CB, so it's deprecated) but we need to pass weight as None
-    # new statement by manik
-    # weights = None
-    # get the class weight if weights is true
     if weights:
         weights = tf.constant(balance_weights)
     else:
