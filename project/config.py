@@ -15,16 +15,16 @@ width = 400
 # ----------------------------------------------------------------------------------------------
 model_name = "fapnet"
 batch_size = 8
-epochs = 30
+epochs = 1
 learning_rate = 3e-4
-val_plot_epoch = 3
+val_plot_epoch = 1
 augment = False
 transfer_lr = False
 gpu = "0"
 
 # Dataset
 # --------------------------------mask--------------------------------------------------------------
-weights = True # False if cfr or [hr], True if cfr_cb or phr_cb
+weights = True # False if cfr or [phr], True if cfr_cb or phr_cb
 balance_weights = [2.2,7.8, 0]
 root_dir = Path("/mnt/hdd2/mdsamiul/project/imseg_rgb_csml")
 dataset_dir = root_dir / "data/dataset"
@@ -57,7 +57,7 @@ patience = 300 # required for early_stopping, if accuracy does not change for 50
 
 # Evaluation
 # ----------------------------------------------------------------------------------------------
-load_model_name = 'fapnet_ex_2024-03-21_e_30_p_128_s_64_ep_30.hdf5'
+load_model_name = 'fapnet_ex_2024-03-21_e_30_p_128_s_64_ep_30_new.hdf5'
 load_model_dir = None #  If None, then by befault root_dir/model/model_name/load_model_name
 evaluation = True # default evaluation value will not work
 video_path = None    # If None, then by default root_dir/data/video_frame
