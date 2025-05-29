@@ -486,6 +486,6 @@ If we run train.py then the the following functions will be executed in the ment
   - `display()`
 - `get_metrics()`
 
-
+# For more Info, Click [FAQ](faq.md)
 
 
