@@ -281,7 +281,7 @@ The number of patches created during preprocessing is determined using the formu
 
 <!-- <img src="https://latex.codecogs.com/svg.image?$$\text{number\_of\_patches}=\left\lceil\frac{\text{height}-\text{patch\_size}}{\text{stride}}&plus;1\right\rceil\times\left\lceil\frac{\text{width}-\text{patch\_size}}{\text{stride}}&plus;1\right\rceil$$" title="$$\text{number\_of\_patches}=\left\lceil\frac{\text{height}-\text{patch\_size}}{\text{stride}}+1\right\rceil\times\left\lceil\frac{\text{width}-\text{patch\_size}}{\text{stride}}+1\right\rceil$$" /> -->
 
-<img src="https://latex.codecogs.com/svg.image?\inline&space;\bg{black}\;\text{Number&space;of&space;Patches}=\frac{(\text{height}&plus;\text{stride}-\text{patch&space;size})\cdot(\text{width}&plus;\text{stride}-\text{patch&space;size})}{\text{stride}^2}\;" title="\;\text{Number of Patches}=\frac{(\text{height}+\text{stride}-\text{patch size})\cdot(\text{width}+\text{stride}-\text{patch size})}{\text{stride}^2}\;" />
+<img src="https://latex.codecogs.com/svg.image?\text{Number&space;of&space;patches}=\left(\left\lceil\frac{\text{height}-\text{patch&space;size}}{\text{stride}}\right\rceil&plus;1\right)\times\left(\left\lceil\frac{\text{width}-\text{patch&space;size}}{\text{stride}}\right\rceil&plus;1\right)" />
 
 These patches are further processed and evaluated against the class balance threshold if `patch_class_balance` is set to `True` in the `config.py` file. All generated patches and their corresponding metadata are saved in the JSON file.
 
