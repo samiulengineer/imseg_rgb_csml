@@ -269,9 +269,9 @@ In this example:
 - The dataset contains **2 unique classes** (1.0 and 2.0).
 - Update the `config.py` file accordingly:
 
-  ```python
-  num_classes = 2
-  ``` 
+```python
+num_classes = 2
+``` 
 
 This ensures that the model is correctly configured for the number of classes in your dataset.
 
@@ -286,6 +286,7 @@ save_tiles(path, out_path, tiles_size=2048, stride=1024)
 ```
 
 #### **Parameters**
+
 - `path`: The directory containing the large images.
 - `out_path`: The directory where the smaller tiles will be saved.
 - `tiles_size`: The size of each tile (e.g., `2048x2048` pixels).
@@ -483,9 +484,11 @@ After confirming the structure, proceed with the steps below:
 #### **Step 4: Validate Image Dimensions**
 
 1. Run the `check_height_width()` function to inspect the dimensions of the dataset.
+
    ```python
    check_height_width(data_dir)
    ```
+   
    - This step ensures that all images are consistent in height and width, and identifies any anomalies.
 
 2. Use this information to adjust the `patch_size`, `height`, and `width` variables in the `config.py` file, as explained in **Question 7**.
