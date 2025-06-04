@@ -20,6 +20,7 @@ This setup ensures systematic tracking and flexible visualization of model perfo
 To visualize predictions during the testing phase, follow these steps:
 
 1. **Configure the Settings**: In the `config.py` file, ensure the following setting:
+
     ```python
     evaluation = False
     ```
@@ -28,9 +29,11 @@ To visualize predictions during the testing phase, follow these steps:
 2. **Execute the Command**: Run the testing script.
 
 3. **Access the Plots**: The resulting prediction plots will be saved in the following directory:
+
     ```
     root_dir/logs/prediction/model_name/test/experiment
     ```
+
    - Replace `root_dir` with the root directory of your project.
    - Replace `model_name` with the name of your model.
    - Replace `experiment` with the specific testing experiment name.
@@ -63,6 +66,7 @@ This allows you to visually assess the model's performance during evaluation.
 Visualizing the dataset before training is a common practice in deep learning. To visualize the dataset, use the `display_all` function in the `visualization.ipynb` file.
 
 #### **Example:**
+
 ```python
 display_all(
     data=train_df,
@@ -74,6 +78,7 @@ display_all(
 *For test dataset, pass `data=test_df` with `name="test"`, and similarly for validation.*
 
 #### **Set the Visualization Directory:**
+
 ```python
 visualization_dir = pathlib.Path("path_where_you_want_to_store_plots")
 ```
@@ -83,6 +88,7 @@ This function generates and saves visualizations, enabling you to inspect your d
 ## 5. How can I randomly or selectively plot data samples during training?
 
 Plotting data samples during training helps verify preprocessing, augmentations, and dataset integrity. The behavior is controlled by the `index` variable in `config.py`:
+
 ```python
 index = "random"  # For random plotting
 ```
@@ -110,6 +116,7 @@ The JSON file contains details about patches such as their coordinates and corre
   "patch_idx": [[0, 0, 512, 512], [512, 0, 1024, 512]]
 }
 ```
+
 These files ensure proper data handling during training and preprocessing, avoiding errors due to inconsistencies.
 
 
@@ -133,13 +140,16 @@ To handle class imbalance, class weights can be adjusted during training to ensu
 #### **Binary Classification**
 - For imbalanced datasets (e.g., one class has significantly more samples), enable class weighting by setting `weights = True` in the `config.py` file.
 - Define appropriate values for `balance_weights`. For example:
+
   ```python
   balance_weights = [4, 6]  # Class 0 gets a weight of 4, Class 1 gets a weight of 6
   ```
+
   These weights should be proportional to the class distributions.
 
 #### **Multi-class Classification**
 - In cases where one class should be ignored (e.g., a boundary class), set its weight to `0`. For example:
+
   ```python
   balance_weights = [4, 6, 0]  # Class 2 (boundary) is ignored
   ```
@@ -149,24 +159,30 @@ This approach adjusts the loss function to account for class proportions, improv
 #### **Calculating Class Weights**
 You can compute class weights using the `class_balance_check` function in the `visualization.ipynb` file:
 1. Run the function with your training dataset:
+
    ```python
    class_balance_check(patchify=False, data_dir=train_df)
    ```
+
 2. Example output:
+
    ```
    class pixel: 1.0 = 27.747506680695906
    class pixel: 2.0 = 72.2524933193041
    ```
+
    Here, 27.75% of pixels belong to Class 1 and 72.25% to Class 2.
 
 3. Assign weights inversely proportional to these percentages. For instance:
    - Weight for Class 1: \( 72.25 / 10 ~ 7.2 \)
    - Weight for Class 2: \( 27.75 / 10 ~ 2.7 \)
+
    ```python
    balance_weights = [7.2, 2.7]
    ```
    
 Update the `config.py` file as follows:
+
 ```python
 weights = True
 balance_weights = [7.2, 2.7]
@@ -182,6 +198,7 @@ You can find the CSV and JSON files in the following directories:
 ```
 root/data/csv
 ```
+
 ```
 root/data/json
 ```
@@ -193,10 +210,13 @@ Normalization using mean and standard deviation ensures consistent input distrib
 
 #### **Steps to Calculate Mean and Standard Deviation**
 1. Prepare the input feature paths:
+
    ```python
    features_path = train_df["feature_ids"].to_list()
    ```
+
 2. Compute the mean and standard deviation by running:
+
    ```python
    mean, std_dev = calculate_average(features_path)
    ```
@@ -218,30 +238,37 @@ mean_std = {
 mean = mean_std.get(dir_name)[0]  # Mean value based on `dir_name`
 std = mean_std.get(dir_name)[1]   # Standard deviation based on `dir_name`
 ```
+
 ### **11. How do I check the number of classes in the dataset?**
 
 To determine the number of classes in your dataset, use the `class_balance_check` function in the `visualization.ipynb` file. This function provides a breakdown of the unique classes along with their distribution.
 
 #### **Steps to Check the Number of Classes**
 1. Load the training dataset:
+
    ```python
    train_df = pd.read_csv(train_dir)
    ```
+
 2. Execute the `class_balance_check` function:
+
    ```python
    class_balance_check(patchify=False, data_dir=train_df)
    ```
 
 #### **Example Output**
+
 ```plaintext
 Class percentage:
 class pixel: 1.0 = 27.747506680695906
 class pixel: 2.0 = 72.2524933193041
 Unique value in the mask dict_keys([1.0, 2.0])
 ```
+
 In this example:
 - The dataset contains **2 unique classes** (1.0 and 2.0).
 - Update the `config.py` file accordingly:
+
   ```python
   num_classes = 2
   ``` 
@@ -253,6 +280,7 @@ This ensures that the model is correctly configured for the number of classes in
 Large-scale images must be tiled to ensure they fit within memory constraints and allow efficient processing during training. For large-scale images, you can use the `save_tiles` function in the `visualization.ipynb` file. This function splits large images into smaller tiles, making them manageable for training and visualization.
 
 #### **Function Syntax**
+
 ```python
 save_tiles(path, out_path, tiles_size=2048, stride=1024)
 ```
@@ -264,6 +292,7 @@ save_tiles(path, out_path, tiles_size=2048, stride=1024)
 - `stride`: The overlap between consecutive tiles (e.g., `1024` pixels).
 
 #### **Example**
+
 ```python
 path = "data/large_images/"          # Directory with large images
 out_path = "data/tiles/"             # Directory to save the tiles
@@ -292,10 +321,12 @@ To count the patches, use the `number_of_patches()` function available in the `v
 Controlling the data split allows you to allocate specific proportions of the dataset for training, validation, and testing, ensuring proper evaluation and model performance.
 
 In `config.py`, adjust the following variables:
+
 ```python
 train_size = 0.8  # 80% of the data for training
 test_size = 0.5   # 10% for testing and 10% for validation (remaining after training)
 ```
+
 This ensures data is divided as required, with the remaining portion allocated for validation and testing.
 
 
@@ -313,6 +344,7 @@ If `transfer_lr = False` and a valid `load_model_name` is provided in the `confi
 - Fine-tuning is particularly useful when adapting a pre-trained model to a similar task or dataset where additional training is required to optimize performance.
 
 **Example:**
+
 ```python
 dir_name = "vh-vv"  # Dataset name
 model_name = "unet"  # Model name
@@ -339,6 +371,7 @@ To enable data augmentation in the pipeline, follow these steps:
 3. To add more augmentation techniques, you can modify the `Augment` class located in the `dataset.py` file. Incorporate additional augmentation methods as needed to enhance the variability of your dataset.
 
 **Example:**
+
 ```python
 self.aug = A.Compose(
     [
@@ -371,12 +404,10 @@ class_balance_threshold = 20  # 20% positive class required in a patch
 
 This mechanism ensures that patches with insufficient positive samples are excluded, improving the training process by focusing on meaningful patches.
 
-
-
-
 ### 18. What steps are required to add additional performance metrics to the training process?
 
 Adding performance metrics allows for a more comprehensive evaluation of the model. Metrics like **Mean IoU** and **Dice Coefficient** are defined in the `metrics.py` file. To add new metrics, modify the `get_metrics()` function in `metrics.py`:
+
 ```python
 def get_metrics():
     return {
@@ -410,17 +441,21 @@ After confirming the structure, proceed with the steps below:
 
 1. Open the `visualization.ipynb` file.
 2. Use the `data_csv_gen()` function to create CSV files for the train, test, and validation splits.
+
    ```python
    data_csv_gen()
    ```
+
 3. These CSV files will contain paths to the input images and their corresponding masks, as explained in **Question 6**.
 
 #### **Step 2: Patch Images and Create JSON Files**
 
 1. Use the `patch_images()` function to patch the dataset and generate a JSON file containing patch indices.
+
    ```python
    patch_images(train_df, "train_phr_cb")
    ```
+
    - `train_df`: The training dataset DataFrame created in Step 1.
    - `"train_phr_cb"`: The naming convention for the generated JSON file.
 
@@ -430,15 +465,19 @@ After confirming the structure, proceed with the steps below:
 #### **Step 3: Configure Class Balance Weights**
 
 1. If class balance weights are required, enable them in the `config.py` file:
+
    ```python
    weights = True
    ```
+
 2. Use the `class_balance_check()` function to:
    - Determine the unique classes in your dataset.
    - Calculate appropriate weights for each class:
+
      ```python
      class_balance_check(patchify=True, data_dir=train_df)
      ```
+
 3. Update the `balance_weights` and `num_classes` variables in the `config.py` file based on the output, as explained in **Question 8**.
 
 #### **Step 4: Validate Image Dimensions**
@@ -454,12 +493,15 @@ After confirming the structure, proceed with the steps below:
 #### **Step 5: Calculate Mean and Standard Deviation**
 
 1. Use the `calculate_average()` function to compute the mean and standard deviation of your dataset:
+
    ```python
    mean, std_dev = calculate_average(features_path)
    ```
+
    - `features_path`: List of feature image paths from the dataset.
 
 2. Update the `mean_std` dictionary in the `config.py` file with the computed values:
+
    ```python
    mean_std = {
        "dataset_name": [mean, std_dev]
@@ -467,7 +509,6 @@ After confirming the structure, proceed with the steps below:
    mean = mean_std.get(dir_name)[0]
    std = mean_std.get(dir_name)[1]
    ```
-
 
 <!--### Summary of Configuration Steps
 
