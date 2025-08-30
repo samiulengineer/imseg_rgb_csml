@@ -3,15 +3,19 @@
 AI-driven image segmentation has transformed mobile photography. It now changes how we capture and edit photos. Before, this technology was only found in high-end editing software. Now, AI brings real-time, in-camera image segmentation to smartphone users everywhere.
 
 At Cellshoppe, we help users make the most of AI features, such as image segmentation. No matter if you’re a developer or a photographer, we can help you use these features well on your mobile device.
-Understanding Image Segmentation in Photography
+
+## **Understanding Image Segmentation in Photography**
+
 Image segmentation divides an image into distinct regions. Each segment represents a meaningful part, like objects, people, or backgrounds. This allows for targeted edits and real-time adjustments that enhance image quality.
 
 AI helps your smartphone divide an image into parts that need special care. For instance, when you take a picture of a person in a landscape, AI can separate the person from the background, sharpen the subject, and blur the background.
-How AI Powers Image Segmentation on Your Mobile Camera
+
+## **How AI Powers Image Segmentation on Your Mobile Camera**
 
 Smartphone cameras use AI to analyze images in real time with advanced algorithms. This capability makes AI-powered segmentation a game-changer in mobile photography.
 
-Here’s how it works:
+**Here’s how it works:**
+
 1. Object Detection: Recognizing the Scene
 
 When you point your camera, the AI performs object detection. It uses pre-trained neural networks to spot different objects in the frame, including people, animals, and textures.
