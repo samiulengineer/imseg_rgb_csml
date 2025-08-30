@@ -2,7 +2,7 @@
 
 AI-driven image segmentation has transformed mobile photography. It now changes how we capture and edit photos. Before, this technology was only found in high-end editing software. Now, AI brings real-time, in-camera image segmentation to smartphone users everywhere.
 
-At Cellshoppe, we help users make the most of AI features, such as image segmentation. No matter if you’re a developer or a photographer, we can help you use these features well on your mobile device.
+At [Cellshoppe](https://cellshoppe.ca/), we help users make the most of AI features, such as image segmentation. No matter if you’re a developer or a photographer, we can help you use these features well on your mobile device.
 
 ## **Understanding Image Segmentation in Photography**
 
@@ -22,7 +22,7 @@ When you point your camera, the AI performs object detection. It uses pre-traine
 
 **Example:** In a portrait, AI detects the face, recognizing key features like the eyes and mouth. This step is essential for effective segmentation.
 
-**Resources:** For more on object detection, check the TensorFlow Object Detection API or OpenCV.
+**Resources:** For more on object detection, check the [TensorFlow Object Detection API](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/) or [OpenCV](https://opencv.org/).
 
 ### **2. Semantic Segmentation: Categorizing Regions**
 
@@ -75,11 +75,11 @@ At Cellshoppe, we think AI image segmentation can improve smartphone photos. Whe
 
 **How Cellshoppe Can Assist:**
 
-**Expert Insights:** We share tips and tutorials on using AI for segmentation in photography and app development in their blog posts, also can buy the latest mobile phone for camera. 
+**Expert Insights:** We share tips and tutorials on using AI for segmentation in photography and app development in their [blog posts](https://cellshoppe.ca/our-blog/), also can buy the [latest mobile phone for camera](https://cellshoppe.ca/mobile-phones-good-camera/). 
 
 **Smartphone Solutions:** Check out the newest phones with AI cameras. They're great for advanced image segmentation.
 
-For more information, visit our website or contact us for a tailored consultation.
+For more information, visit our website or [contact us](https://cellshoppe.ca/our-store-location/) for a tailored consultation.
 
 ## **The Future of AI-Driven Image Segmentation**
 
@@ -97,9 +97,9 @@ AI has redefined mobile photography. Image segmentation, once reserved for pros,
 
 For technical info and updates on AI in mobile photography, check these resources:
 
-Apple Camera and Photography Features
-Google AI Blog
-OpenCV Tutorials
+[Apple Camera and Photography Features](https://www.apple.com/camera/)
+[Google AI Blog](https://ai.googleblog.com/)
+[OpenCV Tutorials](https://opencv.org/)
 
 At Cellshoppe, we focus on helping you use AI for mobile photography and app development. Upgrade your smartphone or add AI features. We have the tools and know-how to help you succeed.
 
